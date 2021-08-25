@@ -111,6 +111,9 @@ Item {
             voicesTitle: model.voicesTitle
             sidePadding: 24
 
+            voicesHeight: model.voicesHeight
+            id: part
+
             onPartClicked: {
                 root.model.selectPart(model.index)
                 view.currentIndex = model.index
@@ -131,6 +134,18 @@ Item {
             onCopyPartRequested: {
                 root.model.copyPart(model.index)
             }
+
+            function getVoicesOpensUpward() {
+                var bottom = view.y + view.height
+                var coords = part.mapFromItem(view, 0, bottom)
+                if (part.y + voicesHeight > coords.y) {
+                    return true
+                }
+                return false
+            }
+
+            voicesOpensUpward: getVoicesOpensUpward()
+        
         }
     }
 }

@@ -37,6 +37,9 @@ ListItemBlank {
 
     property int sidePadding: 0
 
+    property alias voicesOpensUpward: voicesPopup.opensUpward
+    property alias voicesHeight: voicesPopup.height
+
     signal copyPartRequested()
     signal removePartRequested()
     signal voicesVisibilityChangeRequested(var voiceIndex, var voiceVisible)
@@ -169,7 +172,13 @@ ListItemBlank {
         id: voicesPopup
 
         x: showVoicesPopupButton.x + showVoicesPopupButton.width / 2 - width / 2
-        y: showVoicesPopupButton.y + showVoicesPopupButton.height
+        function getVoicesPopupY() {
+            if (!voicesOpensUpward) {
+                return showVoicesPopupButton.y + showVoicesPopupButton.height
+            }
+              return showVoicesPopupButton.y - voicesPopup.height
+        }
+        y: getVoicesPopupY()
 
         onVoiceVisibilityChangeRequested: {
             root.voicesVisibilityChangeRequested(voiceIndex, voiceVisible)
